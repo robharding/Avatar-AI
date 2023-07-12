@@ -16,11 +16,12 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Dna } from "lucide-react";
-
-const GenerateFormSchema = z.object({
-  prompt: z.string(),
-});
-type GenerateFormRequest = z.infer<typeof GenerateFormSchema>;
+import {
+  GenerateFormRequest,
+  GenerateFormSchema,
+} from "@/lib/validators/generate";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 interface GenerateFormProps {}
 
@@ -32,13 +33,19 @@ const GenerateForm: FC<GenerateFormProps> = ({}) => {
     },
   });
 
-  const onSubmit = (values: GenerateFormRequest) => {
-    console.log(values);
-  };
+  const { mutate: onSubmit, isLoading } = useMutation({
+    mutationFn: async (payload: GenerateFormRequest) => {
+      const { data } = await axios.post("/api/generate", payload);
+      return data;
+    },
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit((values) => onSubmit(values))}
+        className="space-y-6"
+      >
         <FormField
           control={form.control}
           name="prompt"
@@ -55,9 +62,9 @@ const GenerateForm: FC<GenerateFormProps> = ({}) => {
             </FormItem>
           )}
         />
-        <Button type="submit">
-          <Dna className="w-4 h-4 mr-2" />
-          Generate Avatar
+        <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+          {!isLoading && <Dna className="w-4 h-4 mr-2" />}
+          Generate
         </Button>
       </form>
     </Form>
