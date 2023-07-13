@@ -1,7 +1,14 @@
 import CloseModal from "@/components/auth/CloseModal";
 import SignIn from "@/components/auth/SignIn";
+import { getAuthSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-const Page = () => {
+const Page = async () => {
+  const session = await getAuthSession();
+  if (session?.user) {
+    return redirect("/dashboard/generate");
+  }
+
   return (
     <div className="fixed inset-0 bg-zinc-900/20 z-10">
       <div className="container flex items-center h-full max-w-lg mx-auto">
