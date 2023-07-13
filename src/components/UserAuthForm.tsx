@@ -4,14 +4,12 @@ import React, { FC, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { Icons } from "./Icons";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const searchParams = useSearchParams();
   // const { toast } = useToast();
 
   const loginWithGoogle = async () => {
@@ -19,7 +17,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
 
     try {
       await signIn("google", {
-        callbackUrl: searchParams.get("redirect") || "/",
+        callbackUrl: "/dashboard/generate",
       });
     } catch (error) {
       // toast({

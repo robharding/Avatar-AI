@@ -5,16 +5,13 @@ import { FC } from "react";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 
-interface SignInButtonProps {
-  redirect: string;
-}
+interface SignInButtonProps {}
 
-const SignInButton: FC<SignInButtonProps> = ({ redirect }) => {
+const SignInButton: FC<SignInButtonProps> = ({}) => {
   return (
     <Link
       href={{
         pathname: "/sign-in",
-        query: { redirect: redirect || "/dashboard" },
       }}
       className={cn(buttonVariants())}
     >
