@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FC } from "react";
-import { Button, buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { signOut } from "next-auth/react";
 
 interface SignOutButtonProps {}
