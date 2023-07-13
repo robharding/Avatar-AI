@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
+  secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
   },
