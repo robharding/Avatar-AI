@@ -22,10 +22,14 @@ import {
 } from "@/lib/validators/generate";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { User } from "next-auth";
+import { useRouter } from "next/navigation";
 
-interface GenerateFormProps {}
+interface GenerateFormProps {
+  user?: User;
+}
 
-const GenerateForm: FC<GenerateFormProps> = ({}) => {
+const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
   const form = useForm<GenerateFormRequest>({
     resolver: zodResolver(GenerateFormSchema),
     defaultValues: {
@@ -33,8 +37,14 @@ const GenerateForm: FC<GenerateFormProps> = ({}) => {
     },
   });
 
+  const router = useRouter();
+
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: GenerateFormRequest) => {
+      if (!user) {
+        return router.push("/sign-in");
+      }
+
       const { data } = await axios.post("/api/generate", payload);
       return data;
     },

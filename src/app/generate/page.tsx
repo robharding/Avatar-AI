@@ -10,7 +10,7 @@ const GeneratePage: NextPage<GeneratePageProps> = async ({}) => {
 
   return (
     <div className="max-w-xl mx-auto mt-10">
-      <GenerateForm />
+      <GenerateForm user={session?.user} />
     </div>
   );
 };
