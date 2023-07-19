@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "px-12")}>
+      <body className={cn(inter.className, "antialiased px-12")}>
         <Providers>
           <Navbar />
           <div>{children}</div>
