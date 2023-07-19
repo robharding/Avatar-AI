@@ -17,7 +17,7 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
 
     try {
       await signIn("google", {
-        callbackUrl: "/dashboard/generate",
+        callbackUrl: "/generate",
       });
     } catch (error) {
       // toast({
