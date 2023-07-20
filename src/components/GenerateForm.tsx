@@ -63,6 +63,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       }
     },
     async onSuccess(res: GenerateFormResponse) {
+      router.refresh();
       toast({
         title: "Success",
         description: <Link href={res.imageUrl}>View Image</Link>,
