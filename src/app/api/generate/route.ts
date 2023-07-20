@@ -8,6 +8,7 @@ import {
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import AWS from "aws-sdk";
+import { Session } from "next-auth";
 
 const s3 = new AWS.S3({
   credentials: {
@@ -28,18 +29,25 @@ const generateImage = async (prompt: string) => {
   return response.data.data[0]!.b64_json!;
 };
 
-const uploadImage = async (image: string) => {
-  const response = await s3
+const uploadImage = async (image: string, prompt: string, userId: string) => {
+  const avatar = await db.avatar.create({
+    data: {
+      prompt,
+      userId,
+    },
+  });
+
+  await s3
     .putObject({
       Bucket: "avatar-ai",
       Body: Buffer.from(image, "base64"),
-      Key: "my-imagec", //TODO: generate random id
+      Key: avatar.id,
       ContentEncoding: "base64",
       ContentType: "image/png",
     })
     .promise();
 
-  console.log(response);
+  return avatar.id;
 };
 
 export async function POST(req: Request) {
@@ -58,7 +66,7 @@ export async function POST(req: Request) {
     const { prompt } = GenerateFormRequestSchema.parse(body);
 
     const image = await generateImage(prompt);
-    const imageUrl = await uploadImage(image);
+    const avatarId = await uploadImage(image, prompt, session.user.id);
 
     await db.user.update({
       where: {
@@ -72,7 +80,7 @@ export async function POST(req: Request) {
     });
 
     const payload: GenerateFormResponse = {
-      imageUrl: "test",
+      avatarId,
     };
 
     return NextResponse.json(payload);

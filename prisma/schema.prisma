@@ -53,4 +53,16 @@ model User {
   image    String?
   accounts Account[]
   sessions Session[]
+
+  avatars Avatar[]
+}
+
+model Avatar {
+  id     String  @id @default(cuid())
+  prompt String?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@index([userId])
 }

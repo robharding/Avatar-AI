@@ -7,7 +7,7 @@ export const GenerateFormRequestSchema = z.object({
 export type GenerateFormRequest = z.infer<typeof GenerateFormRequestSchema>;
 
 export const GenerateFormResponseSchema = z.object({
-  imageUrl: z.string(),
+  avatarId: z.string(),
 });
 
 export type GenerateFormResponse = z.infer<typeof GenerateFormResponseSchema>;

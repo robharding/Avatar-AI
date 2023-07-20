@@ -64,15 +64,15 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         });
       }
     },
-    async onSuccess({ imageUrl }: GenerateFormResponse) {
+    async onSuccess({ avatarId }: GenerateFormResponse) {
       router.refresh();
       form.reset();
 
       toast({
         title: "Success",
-        description: <Link href={imageUrl}>View full image</Link>,
+        description: avatarId,
       });
-      setImagePreview(imageUrl);
+      setImagePreview(avatarId);
     },
   });
 
