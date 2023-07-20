@@ -3,7 +3,6 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -18,7 +17,8 @@ import { Button } from "./ui/button";
 import { Dna } from "lucide-react";
 import {
   GenerateFormRequest,
-  GenerateFormSchema,
+  GenerateFormResponse,
+  GenerateFormRequestSchema,
 } from "@/lib/validators/generate";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
@@ -34,7 +34,7 @@ interface GenerateFormProps {
 
 const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
   const form = useForm<GenerateFormRequest>({
-    resolver: zodResolver(GenerateFormSchema),
+    resolver: zodResolver(GenerateFormRequestSchema),
     defaultValues: {
       prompt: "",
     },
@@ -62,11 +62,10 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         });
       }
     },
-    onSuccess(res) {
-      router.refresh();
+    async onSuccess(res: GenerateFormResponse) {
       toast({
         title: "Success",
-        description: <Link href={res}>View Image</Link>,
+        description: <Link href={res.imageUrl}>View Image</Link>,
       });
     },
   });

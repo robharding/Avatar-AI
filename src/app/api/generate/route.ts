@@ -1,8 +1,11 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import openai from "@/lib/openai";
-import { GenerateFormSchema } from "@/lib/validators/generate";
-import axios from "axios";
+import {
+  GenerateFormResponse,
+  GenerateFormRequestSchema,
+} from "@/lib/validators/generate";
+import { NextResponse } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: Request) {
@@ -18,7 +21,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { prompt } = GenerateFormSchema.parse(body);
+    const { prompt } = GenerateFormRequestSchema.parse(body);
 
     const response = await openai.createImage({
       prompt,
@@ -26,7 +29,7 @@ export async function POST(req: Request) {
       size: "1024x1024",
     });
 
-    const imageUrl = response.data.data[0]?.url;
+    const imageUrl = response.data.data[0]!.url!;
 
     await db.user.update({
       where: {
@@ -39,7 +42,11 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response(imageUrl);
+    const payload: GenerateFormResponse = {
+      imageUrl,
+    };
+
+    return NextResponse.json(payload);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response("Invalid request data passed", { status: 422 });
