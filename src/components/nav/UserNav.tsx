@@ -30,7 +30,7 @@ const UserNav: FC<UserNavProps> = ({ user }) => {
 
   return (
     <div className="flex flex-row gap-4 items-center">
-      <div className="font-light">Credits: {user?.credits}</div>
+      {user && <div className="font-light">Credits: {user?.credits}</div>}
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
