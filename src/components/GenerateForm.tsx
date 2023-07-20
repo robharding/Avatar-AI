@@ -26,6 +26,7 @@ import { User } from "next-auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
+import Link from "next/link";
 
 interface GenerateFormProps {
   user?: User;
@@ -61,8 +62,12 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         });
       }
     },
-    onSuccess() {
+    onSuccess(res) {
       router.refresh();
+      toast({
+        title: "Success",
+        description: <Link href={res}>View Image</Link>,
+      });
     },
   });
 

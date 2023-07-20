@@ -1,6 +1,8 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import openai from "@/lib/openai";
 import { GenerateFormSchema } from "@/lib/validators/generate";
+import axios from "axios";
 import { z } from "zod";
 
 export async function POST(req: Request) {
@@ -18,7 +20,13 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { prompt } = GenerateFormSchema.parse(body);
 
-    // TODO: do something with prompt
+    const response = await openai.createImage({
+      prompt,
+      n: 1,
+      size: "1024x1024",
+    });
+
+    const imageUrl = response.data.data[0]?.url;
 
     await db.user.update({
       where: {
@@ -31,11 +39,11 @@ export async function POST(req: Request) {
       },
     });
 
-    return new Response("OK");
+    return new Response(imageUrl);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response("Invalid request data passed", { status: 422 });
     }
-    return new Response("Could not fetch posts", { status: 500 });
+    return new Response("Could not generate", { status: 500 });
   }
 }
