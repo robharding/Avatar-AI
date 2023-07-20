@@ -17,7 +17,8 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const { prompt } = GenerateFormSchema.parse(body);
-    console.log(prompt);
+
+    // TODO: do something with prompt
 
     await db.user.update({
       where: {

@@ -11,7 +11,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   const user = session?.user;
 
   return (
-    <nav className="flex justify-between py-6">
+    <nav className="flex justify-between py-6 z-50">
       <div className="flex flex-row gap-6 items-center">
         <Link href="/" className="text-2xl font-bold">
           AvatarAI
