@@ -5,18 +5,41 @@ import {
   GenerateFormResponse,
   GenerateFormRequestSchema,
 } from "@/lib/validators/generate";
-import axios from "axios";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import AWS from "aws-sdk";
+
+const s3 = new AWS.S3({
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID!,
+    secretAccessKey: process.env.ACCESS_KEY_SECRET!,
+  },
+  region: "us-east-1",
+});
 
 const generateImage = async (prompt: string) => {
   const response = await openai.createImage({
     prompt,
     n: 1,
     size: "1024x1024",
+    response_format: "b64_json",
   });
 
-  return response.data.data[0]!.url!;
+  return response.data.data[0]!.b64_json!;
+};
+
+const uploadImage = async (image: string) => {
+  const response = await s3
+    .putObject({
+      Bucket: "avatar-ai",
+      Body: Buffer.from(image, "base64"),
+      Key: "my-imagec", //TODO: generate random id
+      ContentEncoding: "base64",
+      ContentType: "image/png",
+    })
+    .promise();
+
+  console.log(response);
 };
 
 export async function POST(req: Request) {
@@ -34,7 +57,8 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { prompt } = GenerateFormRequestSchema.parse(body);
 
-    const imageUrl = await generateImage(prompt);
+    const image = await generateImage(prompt);
+    const imageUrl = await uploadImage(image);
 
     await db.user.update({
       where: {
@@ -48,7 +72,7 @@ export async function POST(req: Request) {
     });
 
     const payload: GenerateFormResponse = {
-      imageUrl,
+      imageUrl: "test",
     };
 
     return NextResponse.json(payload);
