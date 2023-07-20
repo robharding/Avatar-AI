@@ -24,7 +24,9 @@ export async function POST(req: Request) {
         id: session.user.id,
       },
       data: {
-        credits: session.user.credits - 1,
+        credits: {
+          decrement: 1,
+        },
       },
     });
 
