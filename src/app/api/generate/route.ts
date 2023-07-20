@@ -8,6 +8,16 @@ import {
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+const generateImage = async (prompt: string) => {
+  const response = await openai.createImage({
+    prompt,
+    n: 1,
+    size: "1024x1024",
+  });
+
+  return response.data.data[0]!.url!;
+};
+
 export async function POST(req: Request) {
   try {
     const session = await getAuthSession();
@@ -23,13 +33,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { prompt } = GenerateFormRequestSchema.parse(body);
 
-    const response = await openai.createImage({
-      prompt,
-      n: 1,
-      size: "1024x1024",
-    });
-
-    const imageUrl = response.data.data[0]!.url!;
+    const imageUrl = await generateImage(prompt);
 
     await db.user.update({
       where: {

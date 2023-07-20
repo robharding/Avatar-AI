@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import Link from "next/link";
+import Image from "next/image";
 
 interface GenerateFormProps {
   user?: User;
@@ -43,6 +44,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
   const router = useRouter();
   const { toast } = useToast();
   const { loginToast } = useCustomToast();
+  const [imagePreview, setImagePreview] = useState<string>("");
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: GenerateFormRequest) => {
@@ -62,12 +64,16 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         });
       }
     },
-    async onSuccess(res: GenerateFormResponse) {
+    async onSuccess({ imageUrl }: GenerateFormResponse) {
       router.refresh();
+      form.reset();
+
       toast({
         title: "Success",
-        description: <Link href={res.imageUrl}>View Image</Link>,
+        description: <Link href={imageUrl}>View full image</Link>,
       });
+
+      setImagePreview(imageUrl);
     },
   });
 
@@ -98,6 +104,17 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
           Generate
         </Button>
       </form>
+      <div>
+        {imagePreview && (
+          <img
+            src={imagePreview}
+            width={512}
+            height={512}
+            alt="generated avatar"
+            className="rounded-md mt-4 mx-auto"
+          />
+        )}
+      </div>
     </Form>
   );
 };
