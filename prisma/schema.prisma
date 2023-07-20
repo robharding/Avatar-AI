@@ -48,6 +48,7 @@ model User {
   emailVerified DateTime?
 
   username String? @unique
+  credits  Int     @default(5)
 
   image    String?
   accounts Account[]
