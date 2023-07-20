@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import Link from "next/link";
 import Image from "next/image";
+import { S3_URL } from "@/constants";
 
 interface GenerateFormProps {
   user?: User;
@@ -44,7 +45,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
   const router = useRouter();
   const { toast } = useToast();
   const { loginToast } = useCustomToast();
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageId, setImageId] = useState<string>("");
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: GenerateFormRequest) => {
@@ -68,11 +69,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       router.refresh();
       form.reset();
 
-      toast({
-        title: "Success",
-        description: avatarId,
-      });
-      setImagePreview(avatarId);
+      setImageId(avatarId);
     },
   });
 
@@ -104,9 +101,9 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         </Button>
       </form>
       <div>
-        {imagePreview && (
+        {imageId && (
           <img
-            src={imagePreview}
+            src={S3_URL + imageId}
             width={512}
             height={512}
             alt="generated avatar"
