@@ -12,7 +12,7 @@ export default async function AuthLayout({
   }
 
   return (
-    <div className="absolute inset-0 container">
+    <div className="absolute inset-x-0 inset-y-40 container">
       <div className="h-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-20">
         {children}
       </div>
