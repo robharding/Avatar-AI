@@ -2,6 +2,7 @@ import { getAuthSession } from "@/lib/auth";
 import { FC } from "react";
 import UserNav from "./UserNav";
 import Link from "next/link";
+import { db } from "@/lib/db";
 
 interface NavbarProps {}
 

@@ -15,13 +15,16 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface UserNavProps {
   user?: User;
 }
 
 const UserNav: FC<UserNavProps> = ({ user }) => {
+  const session = useSession();
+  console.log(session);
+
   const handleSignOut = () => {
     signOut({
       callbackUrl: `${window.location.origin}/sign-in`,
@@ -29,7 +32,8 @@ const UserNav: FC<UserNavProps> = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-row gap-4 items-center">
+      <div className="font-light">Credits: {user?.credits}</div>
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
