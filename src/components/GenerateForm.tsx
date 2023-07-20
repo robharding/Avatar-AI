@@ -48,6 +48,9 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       const { data } = await axios.post("/api/generate", payload);
       return data;
     },
+    onSuccess() {
+      router.refresh();
+    },
   });
 
   return (
