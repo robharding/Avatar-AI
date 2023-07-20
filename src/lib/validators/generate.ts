@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const GenerateFormRequestSchema = z.object({
-  prompt: z.string(),
+  prompt: z.string().min(3),
 });
 
 export type GenerateFormRequest = z.infer<typeof GenerateFormRequestSchema>;

@@ -72,7 +72,6 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         title: "Success",
         description: <Link href={imageUrl}>View full image</Link>,
       });
-
       setImagePreview(imageUrl);
     },
   });
