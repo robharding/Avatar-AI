@@ -11,10 +11,15 @@ interface UserNavProps {
 
 const UserNav: FC<UserNavProps> = ({ user }) => {
   return (
-    <div className="flex flex-row gap-4 items-center">
+    <div className="flex flex-shrink-0 flex-row gap-2 items-center">
       {user ? (
         <>
-          <div className="font-light">Credits: {user?.credits}</div>
+          <Link
+            href="/buy-credits"
+            className={cn(buttonVariants({ size: "sm", variant: "ghost" }))}
+          >
+            Credits: {user?.credits}
+          </Link>
           <UserNavDropdown user={user} />
         </>
       ) : (

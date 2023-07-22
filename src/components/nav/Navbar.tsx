@@ -13,14 +13,18 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   return (
     <nav className="flex justify-between py-6 z-50">
       <div className="flex flex-row gap-6 items-center">
-        <Link href="/" className="text-2xl font-bold">
+        <Link href="/" prefetch={false} className="text-2xl font-bold">
           AvatarAI
         </Link>
-        <div className=" flex-row gap-6 hidden md:flex">
+        <div className="flex-row gap-6 hidden md:flex">
           <Link href="/generate" className="text-lg font-medium">
             Generate
           </Link>
-          <Link href="/community" className="text-lg font-medium">
+          <Link
+            href="/community"
+            prefetch={false}
+            className="text-lg font-medium"
+          >
             Community
           </Link>
           {user && (
