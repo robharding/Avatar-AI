@@ -11,12 +11,12 @@ const CommunityPage: NextPage<CommunityPageProps> = async ({}) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-10">
       {avatars.map((avatar) => (
-        <div key={avatar.id} className="relative w-40 h-40 mx-auto">
+        <div key={avatar.id} className="relative w-full pt-[100%]">
           <Image
             src={S3_URL + avatar.id}
             alt={`Avatar ${avatar.id}`}
             fill
-            className="object-contain"
+            className="object-cover w-full h-full inset-0"
           />
         </div>
       ))}
