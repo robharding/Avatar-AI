@@ -11,12 +11,15 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface UserNavDropdownProps {
   user: User;
 }
 
 const UserNavDropdown: FC<UserNavDropdownProps> = ({ user }) => {
+  const router = useRouter();
+
   const handleSignOut = () => {
     signOut({
       callbackUrl: `${window.location.origin}/sign-in`,
@@ -32,10 +35,18 @@ const UserNavDropdown: FC<UserNavDropdownProps> = ({ user }) => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Generate</DropdownMenuItem>
-        <DropdownMenuItem>Community</DropdownMenuItem>
-        <DropdownMenuItem>Collection</DropdownMenuItem>
-        <DropdownMenuItem>Feedback</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/generate")}>
+          Generate
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/community")}>
+          Community
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/collection")}>
+          Collection
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/feedback")}>
+          Feedback
+        </DropdownMenuItem>
         <DropdownMenuSeparator /> <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem onClick={(e) => handleSignOut()}>
           Sign Out
