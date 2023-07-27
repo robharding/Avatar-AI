@@ -14,7 +14,7 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Dna } from "lucide-react";
+import { Dna, Loader2 } from "lucide-react";
 import {
   GenerateFormRequest,
   GenerateFormResponse,
@@ -102,13 +102,19 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       </form>
       <div>
         {imageId && (
-          <img
-            src={S3_URL + imageId}
-            width={512}
-            height={512}
-            alt="generated avatar"
-            className="rounded-md mt-4 mx-auto"
-          />
+          <div className="relative w-full pt-[100%] mt-4">
+            <Image
+              src={S3_URL + imageId}
+              alt={`Avatar ${imageId}`}
+              fill
+              className="object-cover w-full h-full inset-0 rounded-lg"
+            />
+          </div>
+        )}
+        {isLoading && (
+          <div className="w-full mt-4">
+            <Loader2 className="animate-spin mx-auto" />
+          </div>
         )}
       </div>
     </Form>
