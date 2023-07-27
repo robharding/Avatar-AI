@@ -47,7 +47,11 @@ const UserNavDropdown: FC<UserNavDropdownProps> = ({ user }) => {
         <DropdownMenuItem onClick={() => router.push("/feedback")}>
           Feedback
         </DropdownMenuItem>
-        <DropdownMenuSeparator /> <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => router.push("/buy-credits")}>
+          Buy Credits
+        </DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem onClick={(e) => handleSignOut()}>
           Sign Out
         </DropdownMenuItem>
