@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     payment_method_types: ["card"],
     line_items: [{ price: productId, quantity: 1 }],
     mode: "payment",
-    success_url: "http://localhost:3000/",
+    success_url: `http://localhost:3000/generate/?newCredits=${amount}`,
   });
 
   return NextResponse.json({ sessionId: stripeSession.id });
