@@ -27,6 +27,7 @@ export async function POST(req: Request) {
         id: string;
         metadata: {
           userId: string;
+          amount: string;
         };
       };
 
@@ -34,7 +35,7 @@ export async function POST(req: Request) {
         where: { id: completedEvent.metadata.userId },
         data: {
           credits: {
-            increment: 25,
+            increment: +completedEvent.metadata.amount,
           },
         },
       });

@@ -4,11 +4,17 @@ import { useBuyCredits } from "@/hooks/use-buy-credits";
 import { FC } from "react";
 import { Button } from "./ui/button";
 
-interface BuyCreditsButtonProps {}
+interface BuyCreditsButtonProps {
+  amount: number;
+}
 
-const BuyCreditsButton: FC<BuyCreditsButtonProps> = ({}) => {
+const BuyCreditsButton: FC<BuyCreditsButtonProps> = ({ amount }) => {
   const { buyCredits } = useBuyCredits();
-  return <Button onClick={() => buyCredits()}>Buy Credits</Button>;
+  return (
+    <Button onClick={() => buyCredits({ creditsAmount: amount })}>
+      Buy {amount} Credits
+    </Button>
+  );
 };
 
 export default BuyCreditsButton;
