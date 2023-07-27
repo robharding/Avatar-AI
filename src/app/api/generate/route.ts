@@ -8,7 +8,6 @@ import {
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import AWS from "aws-sdk";
-import { Session } from "next-auth";
 
 const s3 = new AWS.S3({
   credentials: {
