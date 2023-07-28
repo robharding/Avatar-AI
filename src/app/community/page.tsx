@@ -6,7 +6,12 @@ import Image from "next/image";
 interface CommunityPageProps {}
 
 const CommunityPage: NextPage<CommunityPageProps> = async ({}) => {
-  const avatars = await db.avatar.findMany({ take: 30 });
+  const avatars = await db.avatar.findMany({
+    take: 30,
+    orderBy: {
+      id: "desc",
+    },
+  });
 
   return (
     <section className="max-w-5xl mx-auto">
