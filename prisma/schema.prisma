@@ -58,8 +58,8 @@ model User {
 }
 
 model Avatar {
-  id     String  @id @default(cuid())
-  prompt String?
+  id     String @id @default(cuid())
+  prompt String
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String?

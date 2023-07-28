@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar } from "@prisma/client";
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
@@ -18,15 +18,27 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
   const prompts = avatars.map((avatar) => avatar.prompt);
   const recentPrompts = Array.from(new Set(prompts)).slice(0, 3);
 
+  function inputChange(e: ChangeEvent<HTMLInputElement>) {
+    setSelectedPrompt(-1);
+    setInput(e.currentTarget.value);
+  }
+
+  function selectedPromptChange(prompt: string | null, i: number) {
+    if (selectedPrompt === i) {
+      setSelectedPrompt(-1);
+      setInput("");
+    } else {
+      setSelectedPrompt(i);
+      setInput(prompt || "");
+    }
+  }
+
   return (
     <>
       <Input
         className="mt-4"
         value={input}
-        onChange={(e) => {
-          setSelectedPrompt(-1);
-          setInput(e.currentTarget.value);
-        }}
+        onChange={(e) => inputChange(e)}
         placeholder="Search by prompt"
       />
       {recentPrompts && (
@@ -40,15 +52,7 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
                   selectedPrompt === i && "bg-slate-300"
                 )}
                 key={i}
-                onClick={() => {
-                  if (selectedPrompt === i) {
-                    setSelectedPrompt(-1);
-                    setInput("");
-                  } else {
-                    setSelectedPrompt(i);
-                    setInput(prompt || "");
-                  }
-                }}
+                onClick={() => selectedPromptChange(prompt, i)}
               >
                 {prompt}
               </span>
