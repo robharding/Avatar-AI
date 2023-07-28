@@ -23,13 +23,13 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
     setInput(e.currentTarget.value);
   }
 
-  function selectedPromptChange(prompt: string | null, i: number) {
+  function selectedPromptChange(prompt: string, i: number) {
     if (selectedPrompt === i) {
       setSelectedPrompt(-1);
       setInput("");
     } else {
       setSelectedPrompt(i);
-      setInput(prompt || "");
+      setInput(prompt);
     }
   }
 

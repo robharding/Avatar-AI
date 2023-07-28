@@ -2,7 +2,7 @@ import { getAuthSession } from "@/lib/auth";
 import { FC } from "react";
 import UserNav from "./UserNav";
 import Link from "next/link";
-import { db } from "@/lib/db";
+import { Rocket } from "lucide-react";
 
 interface NavbarProps {}
 
@@ -13,7 +13,12 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   return (
     <nav className="flex justify-between py-6 z-50">
       <div className="flex flex-row gap-6 items-center">
-        <Link href="/" prefetch={false} className="text-2xl font-bold">
+        <Link
+          href="/"
+          prefetch={false}
+          className="text-2xl font-bold flex gap-1 items-center"
+        >
+          <Rocket className="w-6 h-6 text-violet-400 fill-violet-400" />
           AvatarAI
         </Link>
         <div className="flex-row gap-6 hidden md:flex">
