@@ -11,7 +11,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   const user = session?.user;
 
   return (
-    <nav className="flex justify-between py-6 z-50">
+    <nav className="flex justify-between py-6 px-12 z-50 border-b shadow-sm">
       <div className="flex flex-row gap-6 items-center">
         <Link
           href="/"
@@ -21,7 +21,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
           <Rocket className="w-6 h-6 text-violet-400 fill-violet-400" />
           AvatarAI
         </Link>
-        <div className="flex-row gap-6 hidden md:flex">
+        <div className="flex-row gap-4 hidden md:flex">
           <Link href="/generate" className="text-lg font-medium">
             Generate
           </Link>

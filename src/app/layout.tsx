@@ -23,10 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "antialiased px-12")}>
+      <body className={cn(inter.className, "antialiased bg-[#fcf9ff]")}>
         <Providers>
           <Navbar />
-          <div>{children}</div>
+          <div className="px-12 pt-8">{children}</div>
 
           {authModal}
           <Toaster />
