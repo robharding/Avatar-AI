@@ -7,7 +7,7 @@ import {
 } from "@/lib/validators/generate";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import AWS from "aws-sdk";
+import AWS, { AWSError } from "aws-sdk";
 
 const s3 = new AWS.S3({
   credentials: {
@@ -36,15 +36,26 @@ const uploadImage = async (image: string, prompt: string, userId: string) => {
     },
   });
 
-  await s3
-    .putObject({
-      Bucket: "avatar-ai",
-      Body: Buffer.from(image, "base64"),
-      Key: avatar.id,
-      ContentEncoding: "base64",
-      ContentType: "image/png",
-    })
-    .promise();
+  try {
+    await s3
+      .putObject({
+        Bucket: "avatar-ai",
+        Body: Buffer.from(image, "base64"),
+        Key: avatar.id,
+        ContentEncoding: "base64",
+        ContentType: "image/png",
+      })
+      .promise();
+  } catch (err) {
+    // clean up if s3 fails
+    await db.avatar.delete({
+      where: {
+        id: avatar.id,
+      },
+    });
+
+    return null;
+  }
 
   return avatar.id;
 };
@@ -66,6 +77,10 @@ export async function POST(req: Request) {
 
     const image = await generateImage(prompt);
     const avatarId = await uploadImage(image, prompt, session.user.id);
+
+    if (!avatarId) {
+      return new Response("S3 Upload failed", { status: 500 });
+    }
 
     await db.user.update({
       where: {
