@@ -29,31 +29,33 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
         }}
         placeholder="Search by prompt"
       />
-      <div className="mt-4">
-        <h3>Recent prompts</h3>
-        <div className="flex flex-row gap-4 mt-2">
-          {recentPrompts.map((prompt, i) => (
-            <span
-              className={cn(
-                "bg-secondary px-4 py-2 rounded-full cursor-default select-none",
-                selectedPrompt === i && "bg-slate-300"
-              )}
-              key={i}
-              onClick={() => {
-                if (selectedPrompt === i) {
-                  setSelectedPrompt(-1);
-                  setInput("");
-                } else {
-                  setSelectedPrompt(i);
-                  setInput(prompt || "");
-                }
-              }}
-            >
-              {prompt}
-            </span>
-          ))}
+      {recentPrompts && (
+        <div className="mt-4">
+          <h3>Recent prompts</h3>
+          <div className="flex flex-row gap-4 mt-2">
+            {recentPrompts.map((prompt, i) => (
+              <span
+                className={cn(
+                  "bg-secondary px-4 py-2 rounded-full cursor-pointer select-none",
+                  selectedPrompt === i && "bg-slate-300"
+                )}
+                key={i}
+                onClick={() => {
+                  if (selectedPrompt === i) {
+                    setSelectedPrompt(-1);
+                    setInput("");
+                  } else {
+                    setSelectedPrompt(i);
+                    setInput(prompt || "");
+                  }
+                }}
+              >
+                {prompt}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-4 mt-6">
         {avatars
           .filter(
