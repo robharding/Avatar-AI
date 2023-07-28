@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "antialiased bg-[#fcf9ff]")}>
+      <body className={cn(inter.className, "antialiased")}>
         <Providers>
           <Navbar />
           <div className="px-12 pt-8">{children}</div>
