@@ -18,7 +18,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
           prefetch={false}
           className="text-2xl font-bold flex gap-1 items-center"
         >
-          <Rocket className="w-6 h-6 text-violet-400 fill-violet-400" />
+          <Rocket className="w-6 h-6 text-accent fill-accent" />
           AvatarAI
         </Link>
         <div className="flex-row gap-4 hidden md:flex">
