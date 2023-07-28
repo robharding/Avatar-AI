@@ -32,11 +32,11 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
       {recentPrompts && (
         <div className="mt-4">
           <h3>Recent prompts</h3>
-          <div className="flex flex-row gap-4 mt-2">
+          <div className="flex flex-col sm:flex-row gap-4 mt-2">
             {recentPrompts.map((prompt, i) => (
               <span
                 className={cn(
-                  "bg-secondary px-4 py-2 rounded-full cursor-pointer select-none",
+                  "bg-secondary text-center px-4 py-4 ms:py-2 rounded-full cursor-pointer select-none",
                   selectedPrompt === i && "bg-slate-300"
                 )}
                 key={i}
