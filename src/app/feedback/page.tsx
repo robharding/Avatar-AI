@@ -2,6 +2,7 @@ import Feedback from "@/components/Feedback";
 import FeedbackForm from "@/components/forms/FeedbackForm";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { extendedFeedback } from "@/types/db";
 import { Heart } from "lucide-react";
 import type { NextPage } from "next";
 import { redirect } from "next/navigation";
@@ -15,7 +16,11 @@ const FeedbackPage: NextPage<FeedbackPageProps> = async ({}) => {
     return redirect("/");
   }
 
-  const feedback = await db.feedback.findMany();
+  const feedback = await db.feedback.findMany({
+    include: {
+      votes: true,
+    },
+  });
 
   return (
     <section className="max-w-5xl mx-auto">

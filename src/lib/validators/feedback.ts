@@ -5,3 +5,9 @@ export const FeedbackFormRequestSchema = z.object({
 });
 
 export type FeedbackFormRequest = z.infer<typeof FeedbackFormRequestSchema>;
+
+export const FeedbackVoteSchema = z.object({
+  feedbackId: z.string(),
+});
+
+export type FeedbackVoteRequest = z.infer<typeof FeedbackVoteSchema>;

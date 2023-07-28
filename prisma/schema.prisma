@@ -56,25 +56,40 @@ model User {
 
   avatars  Avatar[]
   feedback Feedback[]
+  votes    Vote[]
 }
 
 model Avatar {
   id     String @id @default(cuid())
   prompt String
 
-  user   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
   @@index([userId])
 }
 
 model Feedback {
-  id    String @id @default(cuid())
-  text  String
-  votes Int    @default(0)
+  id   String @id @default(cuid())
+  text String
 
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  votes Vote[]
 
   @@index([userId])
+}
+
+model Vote {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  feedbackId String
+
+  @@index([userId])
+  @@index([feedbackId])
 }
