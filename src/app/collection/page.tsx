@@ -15,6 +15,9 @@ const CollectionPage: NextPage<CollectionPageProps> = async ({}) => {
 
   const avatars = await db.avatar.findMany({
     where: { userId: session.user.id },
+    orderBy: {
+      id: "desc",
+    },
   });
 
   return (

@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
+import { cn } from "@/lib/utils";
 
 interface AvatarCollectionProps {
   avatars: Avatar[];
@@ -12,15 +13,47 @@ interface AvatarCollectionProps {
 
 const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
   const [input, setInput] = useState<string>("");
+  const [selectedPrompt, setSelectedPrompt] = useState<number>(-1);
+
+  const prompts = avatars.map((avatar) => avatar.prompt);
+  const recentPrompts = Array.from(new Set(prompts)).slice(0, 3);
 
   return (
     <>
       <Input
         className="mt-4"
         value={input}
-        onChange={(e) => setInput(e.currentTarget.value)}
+        onChange={(e) => {
+          setSelectedPrompt(-1);
+          setInput(e.currentTarget.value);
+        }}
         placeholder="Search by prompt"
       />
+      <div className="mt-4">
+        <h3>Recent prompts</h3>
+        <div className="flex flex-row gap-4 mt-2">
+          {recentPrompts.map((prompt, i) => (
+            <span
+              className={cn(
+                "bg-secondary px-4 py-2 rounded-full cursor-default select-none",
+                selectedPrompt === i && "bg-slate-300"
+              )}
+              key={i}
+              onClick={() => {
+                if (selectedPrompt === i) {
+                  setSelectedPrompt(-1);
+                  setInput("");
+                } else {
+                  setSelectedPrompt(i);
+                  setInput(prompt || "");
+                }
+              }}
+            >
+              {prompt}
+            </span>
+          ))}
+        </div>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-4 mt-6">
         {avatars
           .filter(
