@@ -14,7 +14,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Dna, Loader2 } from "lucide-react";
+import { Dna } from "lucide-react";
 import {
   GenerateFormRequest,
   GenerateFormResponse,
@@ -108,11 +108,6 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
               fill
               className="object-cover w-full h-full inset-0 rounded-lg"
             />
-          </div>
-        )}
-        {isLoading && (
-          <div className="w-full mt-4">
-            <Loader2 className="animate-spin mx-auto" />
           </div>
         )}
       </div>
