@@ -20,7 +20,7 @@ const CollectionPage: NextPage<CollectionPageProps> = async ({}) => {
   return (
     <section className="max-w-5xl mx-auto">
       <h1 className="text-4xl font-semibold">Your Collection</h1>
-      <h2 className="text-xl">You&apos;ve generate {avatars.length} Icons</h2>
+      <h2 className="text-xl">You&apos;ve generated {avatars.length} Icons</h2>
       <AvatarCollection avatars={avatars} />
     </section>
   );
