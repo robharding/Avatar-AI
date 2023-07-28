@@ -45,7 +45,7 @@ const FeedbackForm: FC<FeedbackFormProps> = ({ user }) => {
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: FeedbackFormRequest) => {
-      const { data } = await axios.post("/api/generate", payload);
+      const { data } = await axios.post("/api/feedback", payload);
       return data;
     },
     onError(error) {

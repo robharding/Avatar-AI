@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { FeedbackFormRequestSchema } from "@/lib/validators/feedback";
 import { z } from "zod";
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const session = await getAuthSession();
 
   if (!session?.user) {
