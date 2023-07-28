@@ -26,6 +26,7 @@ import {
   FeedbackFormRequest,
   FeedbackFormRequestSchema,
 } from "@/lib/validators/feedback";
+import { Textarea } from "../ui/textarea";
 
 interface FeedbackFormProps {
   user: User;
@@ -75,8 +76,7 @@ const FeedbackForm: FC<FeedbackFormProps> = ({ user }) => {
             <FormItem>
               <FormLabel>Feedback</FormLabel>
               <FormControl>
-                {/* TODO: MAKE THIS A TEXT AREA */}
-                <Input placeholder="Feedback..." {...field} />
+                <Textarea placeholder="Feedback..." {...field} />
               </FormControl>
               <FormDescription>Your feedback for the developer</FormDescription>
               <FormMessage />
