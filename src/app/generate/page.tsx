@@ -1,7 +1,6 @@
-import GenerateForm from "@/components/GenerateForm";
+import GenerateForm from "@/components/forms/GenerateForm";
 import { getAuthSession } from "@/lib/auth";
 import type { NextPage } from "next";
-import { redirect } from "next/navigation";
 
 interface GeneratePageProps {}
 

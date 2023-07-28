@@ -11,9 +11,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { Dna, Loader2 } from "lucide-react";
 import {
   GenerateFormRequest,
@@ -26,7 +26,6 @@ import { User } from "next-auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
-import Link from "next/link";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
 
