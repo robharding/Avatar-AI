@@ -1,4 +1,4 @@
-import Feedback from "@/components/Feedback";
+import FeedbackPost from "@/components/FeedbackPost";
 import FeedbackForm from "@/components/forms/FeedbackForm";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -25,7 +25,17 @@ const FeedbackPage: NextPage<FeedbackPageProps> = async ({}) => {
   return (
     <section className="max-w-5xl mx-auto">
       <h1 className="text-4xl font-semibold">Provide your feedback</h1>
-      <Feedback feedback={feedback} />
+
+      <div className="flex flex-row flex-wrap gap-2 mt-10 text-sm">
+        {feedback.map((feedback) => (
+          <FeedbackPost
+            key={feedback.id}
+            feedback={feedback}
+            userId={session.user.id}
+          />
+        ))}
+      </div>
+
       <div className="max-w-xl mt-10">
         <FeedbackForm user={session.user} />
       </div>
