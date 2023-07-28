@@ -49,7 +49,7 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
               <span
                 className={cn(
                   "bg-secondary text-center px-4 py-4 ms:py-2 rounded-full cursor-pointer select-none",
-                  selectedPrompt === i && "bg-slate-300"
+                  selectedPrompt === i && "bg-accent"
                 )}
                 key={i}
                 onClick={() => selectedPromptChange(prompt, i)}
