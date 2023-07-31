@@ -74,6 +74,11 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       form.reset();
 
       setImageIds(avatarIds);
+
+      return toast({
+        title: "Success",
+        description: `Generated ${avatarIds.length} images`,
+      });
     },
   });
 
