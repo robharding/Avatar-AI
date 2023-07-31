@@ -17,7 +17,7 @@ const s3 = new AWS.S3({
   region: "us-east-1",
 });
 
-const generateImage = async (prompt: string, amount: number) => {
+const generateImages = async (prompt: string, amount: number) => {
   const response = await openai.createImage({
     prompt,
     n: amount,
@@ -25,12 +25,10 @@ const generateImage = async (prompt: string, amount: number) => {
     response_format: "b64_json",
   });
 
-  //return response.data.data[0]!.b64_json!;
-
   return response.data.data!.map((data) => data.b64_json!);
 };
 
-const uploadImage = async (
+const uploadImages = async (
   images: string[],
   prompt: string,
   userId: string
@@ -87,12 +85,8 @@ export async function POST(req: Request) {
       return new Response("Not enough credits", { status: 400 });
     }
 
-    const images = await generateImage(prompt, amount);
-    const avatarIds = await uploadImage(images, prompt, session.user.id);
-
-    if (avatarIds.length == 0) {
-      return new Response("S3 Upload failed", { status: 500 });
-    }
+    const images = await generateImages(prompt, amount);
+    const avatarIds = await uploadImages(images, prompt, session.user.id);
 
     await db.user.update({
       where: {
