@@ -8,7 +8,7 @@ export default async function AuthLayout({
 }) {
   const session = await getAuthSession();
   if (session?.user) {
-    return redirect("/dashboard/generate");
+    return redirect("/generate");
   }
 
   return (

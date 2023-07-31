@@ -66,7 +66,10 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
               avatar.prompt?.toLowerCase().includes(input.toLowerCase())
           )
           .map((avatar) => (
-            <div key={avatar.id} className="relative w-full pt-[100%]">
+            <div
+              key={avatar.id}
+              className="relative w-full pt-[100%] hover:opacity-80"
+            >
               <Image
                 src={S3_URL + avatar.id}
                 alt={`Avatar ${avatar.id}`}
