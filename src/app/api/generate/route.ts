@@ -80,12 +80,12 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 400 });
     }
 
-    if (session.user.credits < 1) {
-      return new Response("Not enough credits", { status: 400 });
-    }
-
     const body = await req.json();
     const { prompt, amount } = GenerateFormRequestSchema.parse(body);
+
+    if (session.user.credits < amount) {
+      return new Response("Not enough credits", { status: 400 });
+    }
 
     const images = await generateImage(prompt, amount);
     const avatarIds = await uploadImage(images, prompt, session.user.id);
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       },
       data: {
         credits: {
-          decrement: 1,
+          decrement: amount,
         },
       },
     });

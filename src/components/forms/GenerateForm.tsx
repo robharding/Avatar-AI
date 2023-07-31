@@ -69,7 +69,6 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       router.refresh();
       form.reset();
 
-      console.log(avatarIds);
       setImageIds(avatarIds);
     },
   });
