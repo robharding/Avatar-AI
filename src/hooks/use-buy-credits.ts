@@ -15,7 +15,7 @@ export function useBuyCredits() {
   const { mutate: buyCredits } = useMutation({
     mutationFn: async (payload: CheckoutRequest) => {
       const response = await axios.post("/api/checkout", payload);
-      const { sessionId } = await CheckoutResponseSchema.parse(response.data);
+      const { sessionId } = CheckoutResponseSchema.parse(response.data);
 
       const stripe = await stripePromise;
       await stripe?.redirectToCheckout({
