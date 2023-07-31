@@ -16,9 +16,8 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Dna } from "lucide-react";
 import {
-  GenerateFormRequest,
   GenerateFormResponse,
-  GenerateFormRequestSchema,
+  createGenerateFormSchema,
 } from "@/lib/validators/generate";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
@@ -28,12 +27,17 @@ import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
+import { z } from "zod";
 
 interface GenerateFormProps {
   user?: User;
 }
 
 const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
+  const GenerateFormRequestSchema = createGenerateFormSchema(
+    user?.credits ?? 0
+  );
+  type GenerateFormRequest = z.infer<typeof GenerateFormRequestSchema>;
   const form = useForm<GenerateFormRequest>({
     resolver: zodResolver(GenerateFormRequestSchema),
     defaultValues: {
