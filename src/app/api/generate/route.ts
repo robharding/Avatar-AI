@@ -17,47 +17,59 @@ const s3 = new AWS.S3({
   region: "us-east-1",
 });
 
-const generateImage = async (prompt: string) => {
+const generateImage = async (prompt: string, amount: number) => {
   const response = await openai.createImage({
     prompt,
-    n: 1,
+    n: amount,
     size: "1024x1024",
     response_format: "b64_json",
   });
 
-  return response.data.data[0]!.b64_json!;
+  //return response.data.data[0]!.b64_json!;
+
+  return response.data.data!.map((data) => data.b64_json!);
 };
 
-const uploadImage = async (image: string, prompt: string, userId: string) => {
-  const avatar = await db.avatar.create({
-    data: {
-      prompt,
-      userId,
-    },
-  });
+const uploadImage = async (
+  images: string[],
+  prompt: string,
+  userId: string
+) => {
+  const ids = await Promise.all(
+    images.map(async (image) => {
+      const avatar = await db.avatar.create({
+        data: {
+          prompt,
+          userId,
+        },
+      });
 
-  try {
-    await s3
-      .putObject({
-        Bucket: "avatar-ai",
-        Body: Buffer.from(image, "base64"),
-        Key: avatar.id,
-        ContentEncoding: "base64",
-        ContentType: "image/png",
-      })
-      .promise();
-  } catch (err) {
-    // clean up if s3 fails
-    await db.avatar.delete({
-      where: {
-        id: avatar.id,
-      },
-    });
+      try {
+        await s3
+          .putObject({
+            Bucket: "avatar-ai",
+            Body: Buffer.from(image, "base64"),
+            Key: avatar.id,
+            ContentEncoding: "base64",
+            ContentType: "image/png",
+          })
+          .promise();
+      } catch (err) {
+        // clean up if s3 fails
+        await db.avatar.delete({
+          where: {
+            id: avatar.id,
+          },
+        });
 
-    return null;
-  }
+        return null;
+      }
 
-  return avatar.id;
+      return avatar.id;
+    })
+  );
+
+  return ids.filter((id) => id != null) as string[];
 };
 
 export async function POST(req: Request) {
@@ -73,12 +85,12 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { prompt } = GenerateFormRequestSchema.parse(body);
+    const { prompt, amount } = GenerateFormRequestSchema.parse(body);
 
-    const image = await generateImage(prompt);
-    const avatarId = await uploadImage(image, prompt, session.user.id);
+    const images = await generateImage(prompt, amount);
+    const avatarIds = await uploadImage(images, prompt, session.user.id);
 
-    if (!avatarId) {
+    if (avatarIds.length == 0) {
       return new Response("S3 Upload failed", { status: 500 });
     }
 
@@ -94,7 +106,7 @@ export async function POST(req: Request) {
     });
 
     const payload: GenerateFormResponse = {
-      avatarId,
+      avatarIds,
     };
 
     return NextResponse.json(payload);

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -38,13 +38,14 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
     resolver: zodResolver(GenerateFormRequestSchema),
     defaultValues: {
       prompt: "",
+      amount: 1,
     },
   });
 
   const router = useRouter();
   const { toast } = useToast();
   const { loginToast } = useCustomToast();
-  const [imageId, setImageId] = useState<string>("");
+  const [imageIds, setImageIds] = useState<string[]>([]);
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: GenerateFormRequest) => {
@@ -64,11 +65,12 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
         });
       }
     },
-    async onSuccess({ avatarId }: GenerateFormResponse) {
+    async onSuccess({ avatarIds }: GenerateFormResponse) {
       router.refresh();
       form.reset();
 
-      setImageId(avatarId);
+      console.log(avatarIds);
+      setImageIds(avatarIds);
     },
   });
 
@@ -94,14 +96,36 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="amount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Generate how many (1 credit each)</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    field.onChange(+event.target.value)
+                  }
+                  value={field.value}
+                />
+              </FormControl>
+              <FormDescription>
+                Your prompt to generate an avatar.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" isLoading={isLoading} disabled={isLoading}>
           {!isLoading && <Dna className="w-4 h-4 mr-2" />}
           Generate
         </Button>
       </form>
-      <div>
-        {imageId && (
-          <div className="relative w-full pt-[100%] mt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-6">
+        {imageIds.map((imageId) => (
+          <div className="relative w-full pt-[100%]" key={imageId}>
             <Image
               src={S3_URL + imageId}
               alt={`Avatar ${imageId}`}
@@ -109,7 +133,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
               className="object-cover w-full h-full inset-0 rounded-lg"
             />
           </div>
-        )}
+        ))}
       </div>
     </Form>
   );
