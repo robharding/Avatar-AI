@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Avatar } from "./ui/avatar";
 import { Dna, Download, Menu, Redo } from "lucide-react";
 
 interface AvatarDropdownProps {}
