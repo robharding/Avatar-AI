@@ -28,7 +28,7 @@ const CollectionPage: NextPage<CollectionPageProps> = async ({}) => {
         <span className="text-accent font-semibold">{avatars.length}</span>{" "}
         avatars
       </h2>
-      <AvatarCollection avatars={avatars} />
+      <AvatarCollection avatars={avatars} user={session.user} />
     </section>
   );
 };

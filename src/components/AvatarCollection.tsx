@@ -5,16 +5,17 @@ import { ChangeEvent, FC, useState } from "react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
-import { cn } from "@/lib/utils";
 import { Toggle } from "./ui/toggle";
-import { Menu } from "lucide-react";
 import AvatarDropdown from "./AvatarDropdown";
+
+import { User } from "next-auth";
 
 interface AvatarCollectionProps {
   avatars: Avatar[];
+  user: User;
 }
 
-const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
+const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars, user }) => {
   const [input, setInput] = useState<string>("");
   const [selectedPrompt, setSelectedPrompt] = useState<number>(-1);
 
@@ -78,7 +79,7 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
                 />
               </div>
               <div className="absolute -top-1 -right-1">
-                <AvatarDropdown avatar={avatar} />
+                <AvatarDropdown avatar={avatar} user={user} />
               </div>
             </div>
           ))}
