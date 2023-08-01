@@ -1,4 +1,4 @@
-import AvatarCollection from "@/components/AvatarCollection";
+import AvatarCollection from "@/components/collection/AvatarCollection";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import type { NextPage } from "next";

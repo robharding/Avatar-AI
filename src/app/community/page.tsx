@@ -1,3 +1,4 @@
+import AvatarPreview from "@/components/collection/AvatarPreview";
 import { S3_URL } from "@/constants";
 import { db } from "@/lib/db";
 import type { NextPage } from "next";
@@ -22,14 +23,7 @@ const CommunityPage: NextPage<CommunityPageProps> = async ({}) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-4 mt-6">
         {avatars.map((avatar) => (
-          <div key={avatar.id} className="relative w-full pt-[100%]">
-            <Image
-              src={S3_URL + avatar.id}
-              alt={`Avatar ${avatar.id}`}
-              fill
-              className="object-cover w-full h-full inset-0 rounded-lg"
-            />
-          </div>
+          <AvatarPreview avatarId={avatar.id} key={avatar.id} />
         ))}
       </div>
     </section>

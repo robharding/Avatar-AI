@@ -28,6 +28,7 @@ import { useCustomToast } from "@/hooks/use-custom-toast";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
 import { z } from "zod";
+import AvatarPreview from "../collection/AvatarPreview";
 
 interface GenerateFormProps {
   user?: User;
@@ -134,14 +135,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
       </form>
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-6">
         {imageIds.map((imageId) => (
-          <div className="relative w-full pt-[100%]" key={imageId}>
-            <Image
-              src={S3_URL + imageId}
-              alt={`Avatar ${imageId}`}
-              fill
-              className="object-cover w-full h-full inset-0 rounded-lg"
-            />
-          </div>
+          <AvatarPreview avatarId={imageId} key={imageId} />
         ))}
       </div>
     </Form>

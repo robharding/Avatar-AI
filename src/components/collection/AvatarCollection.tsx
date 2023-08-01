@@ -2,13 +2,14 @@
 
 import { Avatar } from "@prisma/client";
 import { ChangeEvent, FC, useState } from "react";
-import { Input } from "./ui/input";
+import { Input } from "../ui/input";
 import Image from "next/image";
 import { S3_URL } from "@/constants";
-import { Toggle } from "./ui/toggle";
+import { Toggle } from "../ui/toggle";
 import AvatarDropdown from "./AvatarDropdown";
 
 import { User } from "next-auth";
+import AvatarPreview from "./AvatarPreview";
 
 interface AvatarCollectionProps {
   avatars: Avatar[];
@@ -70,14 +71,7 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars, user }) => {
           )
           .map((avatar) => (
             <div key={avatar.id} className="relative">
-              <div className="relative w-full pt-[100%]">
-                <Image
-                  src={S3_URL + avatar.id}
-                  alt={`Avatar ${avatar.id}`}
-                  fill
-                  className="object-cover w-full h-full inset-0 rounded-lg shadow-md"
-                />
-              </div>
+              <AvatarPreview avatarId={avatar.id} />
               <div className="absolute -top-1 -right-1">
                 <AvatarDropdown avatar={avatar} user={user} />
               </div>

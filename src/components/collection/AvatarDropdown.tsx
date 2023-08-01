@@ -6,7 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { Dna, Download, Loader2, Menu, Redo } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar } from "@prisma/client";
@@ -20,7 +20,7 @@ import {
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import GenerateForm from "./forms/GenerateForm";
+import GenerateForm from "../forms/GenerateForm";
 
 interface AvatarDropdownProps {
   avatar: Avatar;
