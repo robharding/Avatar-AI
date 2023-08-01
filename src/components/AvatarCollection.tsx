@@ -7,6 +7,8 @@ import Image from "next/image";
 import { S3_URL } from "@/constants";
 import { cn } from "@/lib/utils";
 import { Toggle } from "./ui/toggle";
+import { Menu } from "lucide-react";
+import AvatarDropdown from "./AvatarDropdown";
 
 interface AvatarCollectionProps {
   avatars: Avatar[];
@@ -66,16 +68,18 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
               avatar.prompt?.toLowerCase().includes(input.toLowerCase())
           )
           .map((avatar) => (
-            <div
-              key={avatar.id}
-              className="relative w-full pt-[100%] hover:opacity-80"
-            >
-              <Image
-                src={S3_URL + avatar.id}
-                alt={`Avatar ${avatar.id}`}
-                fill
-                className="object-cover w-full h-full inset-0 rounded-lg"
-              />
+            <div key={avatar.id} className="relative">
+              <div className="relative w-full pt-[100%]">
+                <Image
+                  src={S3_URL + avatar.id}
+                  alt={`Avatar ${avatar.id}`}
+                  fill
+                  className="object-cover w-full h-full inset-0 rounded-lg shadow-md"
+                />
+              </div>
+              <div className="absolute -top-1 -right-1">
+                <AvatarDropdown />
+              </div>
             </div>
           ))}
       </div>
