@@ -8,10 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Dna, Download, Menu, Redo } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Avatar } from "@prisma/client";
 
-interface AvatarDropdownProps {}
+interface AvatarDropdownProps {
+  avatar: Avatar;
+}
 
-const AvatarDropdown: FC<AvatarDropdownProps> = ({}) => {
+const AvatarDropdown: FC<AvatarDropdownProps> = ({ avatar }) => {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -28,7 +34,9 @@ const AvatarDropdown: FC<AvatarDropdownProps> = ({}) => {
           Quick Variant (1 Credit)
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => {}}>
+        <DropdownMenuItem
+          onClick={() => router.push(`/generate?prompt=${avatar.prompt}`)}
+        >
           <Redo className="w-4 h-4 mr-2" /> Reuse Prompt
         </DropdownMenuItem>
       </DropdownMenuContent>

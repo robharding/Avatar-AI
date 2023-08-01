@@ -22,7 +22,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { User } from "next-auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import Image from "next/image";
@@ -34,6 +34,12 @@ interface GenerateFormProps {
 }
 
 const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
+  const { loginToast } = useCustomToast();
+  const [imageIds, setImageIds] = useState<string[]>([]);
+
   const GenerateFormRequestSchema = createGenerateFormSchema(
     user?.credits ?? 0
   );
@@ -41,15 +47,10 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
   const form = useForm<GenerateFormRequest>({
     resolver: zodResolver(GenerateFormRequestSchema),
     defaultValues: {
-      prompt: "",
+      prompt: searchParams.get("prompt") ?? "",
       amount: 1,
     },
   });
-
-  const router = useRouter();
-  const { toast } = useToast();
-  const { loginToast } = useCustomToast();
-  const [imageIds, setImageIds] = useState<string[]>([]);
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (payload: GenerateFormRequest) => {

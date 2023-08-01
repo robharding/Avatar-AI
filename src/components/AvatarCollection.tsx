@@ -78,7 +78,7 @@ const AvatarCollection: FC<AvatarCollectionProps> = ({ avatars }) => {
                 />
               </div>
               <div className="absolute -top-1 -right-1">
-                <AvatarDropdown />
+                <AvatarDropdown avatar={avatar} />
               </div>
             </div>
           ))}
