@@ -20,12 +20,9 @@ const Page = ({ params: { avatarId } }: AvatarPageProps) => {
   useOnClickOutside(ref, () => router.back());
 
   return (
-    <div className="fixed inset-0 bg-zinc-900/20 z-10">
-      <div
-        ref={ref}
-        className="container flex items-center h-full max-w-2xl mx-auto"
-      >
-        <div className="relative bg-white w-full rounded-lg">
+    <div className="fixed inset-0 bg-zinc-900/20 z-10 flex">
+      <div ref={ref} className="container max-w-2xl m-auto">
+        <div className="relative w-full rounded-lg">
           <AvatarPreview avatarId={avatarId} link={false} />
         </div>
       </div>
