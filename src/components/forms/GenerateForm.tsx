@@ -97,7 +97,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
             <FormItem>
               <FormLabel>Prompt</FormLabel>
               <FormControl>
-                <Input placeholder="Prompt..." {...field} />
+                <Input disabled={!user} placeholder="Prompt..." {...field} />
               </FormControl>
               <FormDescription>
                 Your prompt to generate an avatar.
@@ -114,6 +114,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
               <FormLabel>Generate how many (1 credit each)</FormLabel>
               <FormControl>
                 <Input
+                  disabled={!user}
                   type="number"
                   onChange={(event: ChangeEvent<HTMLInputElement>) =>
                     field.onChange(+event.target.value)
@@ -128,7 +129,11 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
             </FormItem>
           )}
         />
-        <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          disabled={isLoading || !user}
+        >
           {!isLoading && <Dna className="w-4 h-4 mr-2" />}
           Generate
         </Button>
