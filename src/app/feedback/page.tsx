@@ -2,8 +2,6 @@ import FeedbackPost from "@/components/FeedbackPost";
 import FeedbackForm from "@/components/forms/FeedbackForm";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { extendedFeedback } from "@/types/db";
-import { Heart } from "lucide-react";
 import type { NextPage } from "next";
 import { redirect } from "next/navigation";
 
