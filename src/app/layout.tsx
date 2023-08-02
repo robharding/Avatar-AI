@@ -17,9 +17,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
   authModal,
+  avatarModal,
 }: {
   children: React.ReactNode;
   authModal: React.ReactNode;
+  avatarModal: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -29,6 +31,7 @@ export default function RootLayout({
           <div className="px-12 pt-8">{children}</div>
 
           {authModal}
+          {avatarModal}
           <Toaster />
         </Providers>
       </body>
