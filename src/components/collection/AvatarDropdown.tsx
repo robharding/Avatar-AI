@@ -20,7 +20,6 @@ import {
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import GenerateForm from "../forms/GenerateForm";
 
 interface AvatarDropdownProps {
   avatar: Avatar;

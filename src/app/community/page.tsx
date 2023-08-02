@@ -1,8 +1,6 @@
 import AvatarPreview from "@/components/collection/AvatarPreview";
-import { S3_URL } from "@/constants";
 import { db } from "@/lib/db";
 import type { NextPage } from "next";
-import Image from "next/image";
 
 interface CommunityPageProps {}
 

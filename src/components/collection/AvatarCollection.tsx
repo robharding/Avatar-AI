@@ -3,8 +3,6 @@
 import { Avatar } from "@prisma/client";
 import { ChangeEvent, FC, useState } from "react";
 import { Input } from "../ui/input";
-import Image from "next/image";
-import { S3_URL } from "@/constants";
 import { Toggle } from "../ui/toggle";
 import AvatarDropdown from "./AvatarDropdown";
 
