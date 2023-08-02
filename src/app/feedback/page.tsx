@@ -25,7 +25,7 @@ const FeedbackPage: NextPage<FeedbackPageProps> = async ({}) => {
   return (
     <section className="max-w-5xl mx-auto">
       <h1 className="text-4xl font-semibold">Provide your feedback</h1>
-
+      <h2 className="text-xl">Let me know what you think!</h2>
       <div className="flex flex-row flex-wrap gap-2 mt-10 text-sm">
         {feedback.map((feedback) => (
           <FeedbackPost
