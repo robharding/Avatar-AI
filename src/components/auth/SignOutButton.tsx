@@ -10,7 +10,7 @@ interface SignOutButtonProps {}
 const SignOutButton: FC<SignOutButtonProps> = ({}) => {
   const handleSignOut = () => {
     signOut({
-      callbackUrl: `${window.location.origin}/sign-in`,
+      callbackUrl: `/`,
     });
   };
 

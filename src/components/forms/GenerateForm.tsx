@@ -111,7 +111,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Generate how many (1 credit each)</FormLabel>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
                 <Input
                   disabled={!user}
@@ -123,7 +123,7 @@ const GenerateForm: FC<GenerateFormProps> = ({ user }) => {
                 />
               </FormControl>
               <FormDescription>
-                Your prompt to generate an avatar.
+                How many to generate. (1 credit each)
               </FormDescription>
               <FormMessage />
             </FormItem>

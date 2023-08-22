@@ -10,7 +10,7 @@ const CollectionPage: NextPage<CollectionPageProps> = async ({}) => {
   const session = await getAuthSession();
 
   if (!session?.user) {
-    return redirect("/");
+    return redirect("/sign-in");
   }
 
   const avatars = await db.avatar.findMany({
