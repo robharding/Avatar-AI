@@ -22,7 +22,7 @@ const UserNavDropdown: FC<UserNavDropdownProps> = ({ user }) => {
 
   const handleSignOut = () => {
     signOut({
-      callbackUrl: `${window.location.origin}/sign-in`,
+      callbackUrl: `/`,
     });
   };
 
