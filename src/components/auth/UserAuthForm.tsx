@@ -15,8 +15,6 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
   const { toast } = useToast();
   const searchParams = useSearchParams();
 
-  console.log(searchParams.get("redirect"));
-
   const loginWithGoogle = async () => {
     setIsLoading(true);
 

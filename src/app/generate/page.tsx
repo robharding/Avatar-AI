@@ -1,7 +1,7 @@
+import SignInButton from "@/components/auth/SignInButton";
 import GenerateForm from "@/components/forms/GenerateForm";
 import { getAuthSession } from "@/lib/auth";
 import type { NextPage } from "next";
-import Link from "next/link";
 
 interface GeneratePageProps {}
 
@@ -23,9 +23,10 @@ const GeneratePage: NextPage<GeneratePageProps> = async ({}) => {
           </>
         ) : (
           <>
-            <Link href="/sign-in" className="text-accent font-semibold">
-              Sign in
-            </Link>{" "}
+            <SignInButton
+              className="text-accent font-semibold"
+              returnHere={true}
+            />{" "}
             to generate avatars
           </>
         )}

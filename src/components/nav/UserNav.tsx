@@ -4,6 +4,7 @@ import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import UserNavDropdown from "./UserNavDropdown";
+import SignInButton from "../auth/SignInButton";
 
 interface UserNavProps {
   user?: User;
@@ -23,9 +24,7 @@ const UserNav: FC<UserNavProps> = ({ user }) => {
           <UserNavDropdown user={user} />
         </>
       ) : (
-        <Link href="/sign-in" className={cn(buttonVariants())}>
-          Sign In
-        </Link>
+        <SignInButton className={cn(buttonVariants())} returnHere={true} />
       )}
     </div>
   );
