@@ -11,7 +11,7 @@ const Navbar: FC<NavbarProps> = async ({}) => {
   const user = session?.user;
 
   return (
-    <nav className="flex justify-between py-6 px-12 z-50 border-b shadow-sm bg-gradient-to-l from-[#fcf9ff] to-white">
+    <nav className="flex justify-between py-6 px-12 z-50 border-b shadow-sm">
       <div className="flex flex-row gap-6 items-center">
         <Link
           href="/"

@@ -6,6 +6,7 @@ import React from "react";
 import Navbar from "@/components/nav/Navbar";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
+import Background from "@/components/background/Background";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased")}>
         <Providers>
+          <Background />
           <Navbar />
-          <div className="px-12 pt-8">{children}</div>
+          <div className="px-12 pt-8 bg-transparent">{children}</div>
 
           {authModal}
           {avatarModal}
