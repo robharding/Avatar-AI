@@ -76,7 +76,11 @@ const FeedbackForm: FC<FeedbackFormProps> = ({ user }) => {
             <FormItem>
               <FormLabel>Feedback</FormLabel>
               <FormControl>
-                <Textarea placeholder="Feedback..." {...field} />
+                <Textarea
+                  className="bg-slate-50"
+                  placeholder="Feedback..."
+                  {...field}
+                />
               </FormControl>
               <FormDescription>Your feedback for the developer</FormDescription>
               <FormMessage />

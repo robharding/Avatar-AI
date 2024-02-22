@@ -52,7 +52,7 @@ const FeedbackPost: FC<FeedbackPostProps> = ({ feedback, userId }) => {
   });
 
   return (
-    <div className="bg-secondary rounded px-4 py-4 flex items-center gap-4 max-w-lg shadow-md">
+    <div className="bg-white rounded px-4 py-4 flex items-center gap-4 max-w-lg shadow-md">
       <div
         onClick={() => upvoteFeedback({ feedbackId: feedback.id })}
         className="flex flex-row items-center gap-1 hover:cursor-pointer"
